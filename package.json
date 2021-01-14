@@ -7,9 +7,22 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "axios": "^0.21.0",
+    "babel-loader": "^8.2.2",
     "core-js": "^3.6.5",
+    "css-loader": "^5.0.1",
+    "element-ui": "^2.14.1",
+    "github-markdown-css": "^4.0.0",
+    "highlight": "^0.2.4",
+    "mavon-editor": "^2.9.1",
+    "qs": "^6.9.4",
+    "sass-loader": "^10.1.0",
+    "showdown-highlight": "^2.1.5",
+    "style-loader": "^2.0.0",
     "vue": "^2.6.11",
+    "vue-cookies": "^1.7.4",
     "vue-router": "^3.2.0",
+    "vue-showdown": "^2.4.1",
     "vuex": "^3.4.0"
   },
   "devDependencies": {
@@ -17,6 +30,10 @@
     "@vue/cli-plugin-router": "~4.5.0",
     "@vue/cli-plugin-vuex": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
+    "bootstrap": "^4.5.3",
+    "jquery": "^3.5.1",
+    "node-sass": "^5.0.0",
+    "popper.js": "^1.16.1",
     "vue-template-compiler": "^2.6.11"
   },
   "browserslist": [
