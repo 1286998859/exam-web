@@ -6,63 +6,23 @@
             <div class="position-relative">
                 <!-- 筛选条件 -->
                 <ul class="nav nav-tabs mb-3">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">最新</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">最热</a>
-                    </li>
-
-                    <div style="margin-left:800px">
-                        <el-button @click="goPublish" v-if="this.$cookies.get('cname')!=null" type="primary">发布帖子<i class="el-icon-upload el-icon--right"></i></el-button>
+                    <div>
+                        <el-input placeholder="请输入帖子标题进行搜索，可以直接回车搜索..." prefix-icon="el-icon-search"
+                                  clearable
+                                  @clear="searchByKeyword"
+                                  style="width: 350px;margin-right: 10px" v-model="keyword"
+                                  @keydown.enter.native="searchByKeyword" ></el-input>
+                        <el-button icon="el-icon-search" type="primary" @click="searchByKeyword" >
+                            搜索
+                        </el-button>
                     </div>
+
+<!--                    <div style="margin-left:800px">-->
+                        <el-button style="margin-left:540px" @click="goPublish" v-if="this.$cookies.get('cname')!=null" type="primary">发布帖子<i class="el-icon-upload el-icon--right"></i></el-button>
+<!--                    </div>-->
 
                 </ul>
 
-            </div>
-            <!-- 弹出框 -->
-            <div class="modal fade" id="publishModal" tabindex="-1" role="dialog" aria-labelledby="publishModalLabel"
-                 aria-hidden="true">
-                <div class="modal-dialog modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="publishModalLabel">新帖发布</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <form>
-                                <div class="form-group">
-                                    <label for="recipient-name" class="col-form-label">标题：</label>
-                                    <input type="text" class="form-control" id="recipient-name">
-                                </div>
-                                <div class="form-group">
-                                    <label for="message-text" class="col-form-label">正文：</label>
-                                    <textarea class="form-control" id="message-text" rows="15"></textarea>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                            <button type="button" class="btn btn-primary" id="publishBtn">发布</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- 提示框 -->
-            <div class="modal fade" id="hintModal" tabindex="-1" role="dialog" aria-labelledby="hintModalLabel"
-                 aria-hidden="true">
-                <div class="modal-dialog modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="hintModalLabel">提示</h5>
-                        </div>
-                        <div class="modal-body" id="hintBody">
-                            发布完毕!
-                        </div>
-                    </div>
-                </div>
             </div>
 
             <!-- 帖子列表 -->
@@ -170,6 +130,7 @@
                         headerUrl:"",
                     }
                 },
+                keyword:"",
                 // User:{
                 //     id:"",
                 //     username:"",
@@ -201,8 +162,14 @@
                     .catch(_ => {});
             },
             getDiscussInfo() {
-                //分页查询所有帖子
+                //分页查询所有帖子discussPosts
                 this.$axios(`/discussPosts/${this.pagination.current}/${this.pagination.size}`).then(res => {
+                    this.pagination = res.data.data;
+                    this.DiscussPosts = this.pagination.records;
+                }).catch(error => {});
+            },
+            searchByKeyword(){
+                this.$axios(`/discussPostsByKeyword/${this.pagination.current}/${this.pagination.size}/${this.keyword}`).then(res => {
                     this.pagination = res.data.data;
                     this.DiscussPosts = this.pagination.records;
                 }).catch(error => {});

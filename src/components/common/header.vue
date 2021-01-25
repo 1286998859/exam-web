@@ -1,6 +1,6 @@
 <template>
     <header id="topbar" class="homeHeader">
-        <div class="title">艾学习考试系统教师管理端</div>
+        <div class="title">黎明社区生活互动平台管理系统</div>
         <div>
 
             <el-dropdown class="userInfo" @command="commandHandler">

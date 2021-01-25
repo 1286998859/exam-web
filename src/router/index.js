@@ -84,7 +84,14 @@ const routes = [
             {
                 path: '/studentManage', //学生管理界面
                 component: () => import('../components/teacher/studentManage')
-            },/*
+            },
+            {
+                path: '/discussManage',
+                component: () => import('../components/teacher/discussManage')
+            },
+
+
+            /*
             {
                 path: '/addStudent', //添加学生
                 component: () => import('../components/teacher/addStudent')

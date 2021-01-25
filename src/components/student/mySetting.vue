@@ -58,13 +58,13 @@
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        let studentId = this.$cookies.get("cid");
+                        let id = this.$cookies.get("cid");
                         this.$axios({ //修改密码
-                            url: 'studentPWD',
+                            url: '/userPWD',
                             method: 'put',
                             data: {
-                                pwd: this.ruleForm2.pass,
-                                studentId
+                                password: this.ruleForm2.pass,
+                                id
                             }
                         }).then(res => {
                             if(res.data != null ) { //修改成功提示

@@ -1,7 +1,7 @@
 <template>
     <section class="index">
         <div class="hello">
-            <span>尊敬的{{user.userName}}老师您好，欢迎使用本考试系统！</span>
+            <span>尊敬的{{user.userName}}您好，欢迎使用黎明社区后台管理系统！</span>
         </div>
 
     </section>

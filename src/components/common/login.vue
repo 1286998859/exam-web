@@ -5,7 +5,7 @@
             <el-col :lg="8" :xs="16" :md="10" :span="10">
                 <div class="top">
                     <i class="iconfont icon-kaoshi"></i>
-                    <span class="title">艾学习考试系统</span>
+                    <span class="title">黎明社区生活互动平台</span>
                 </div>
                 <div class="bottom">
                     <div class="container">
@@ -56,25 +56,36 @@
                         this.postRequest('/login',this.loginForm).then(res=>{
                             let resData = res.data.data;
                             if(resData != null) {
-                                switch(resData.role) {
-                                    case "0":  //管理员
-                                        this.$cookies.set("cname", resData.adminName);
-                                        this.$cookies.set("cid", resData.adminId);
-                                        this.$cookies.set("role", 0);
-                                        this.$router.push({path: '/index' }); //跳转到首页
-                                        break;
-                                    case "1": //教师
-                                        this.$cookies.set("cname", resData.teacherName);
-                                        this.$cookies.set("cid", resData.teacherId);
-                                        this.$cookies.set("role", 1);
-                                        this.$router.push({path: '/index' }); //跳转到教师用户
-                                        break;
-                                    case "2": //学生
-                                        this.$cookies.set("cname", resData.studentName);
-                                        this.$cookies.set("cid", resData.studentId);
-                                        this.$router.push({path: '/student'});
-                                        break;
+                                if(resData.type == 0){
+                                    this.$cookies.set("cname", resData.username);
+                                    this.$cookies.set("cid", resData.id);
+                                    this.$router.push({path: '/student'});
+                                }else {
+                                    this.$cookies.set("cname", resData.username);
+                                    this.$cookies.set("cid", resData.id);
+                                    this.$cookies.set("role", 1);
+                                    this.$router.push({path: '/index' }); //跳转到首页
                                 }
+                                // switch(resData.type) {
+                                //     case "0": //学生
+                                //         this.$cookies.set("cname", resData.username);
+                                //         this.$cookies.set("cid", resData.id);
+                                //         this.$router.push({path: '/student'});
+                                //         break;
+                                //     case "2":  //管理员
+                                //         this.$cookies.set("cname", resData.adminName);
+                                //         this.$cookies.set("cid", resData.adminId);
+                                //         this.$cookies.set("role", 0);
+                                //         this.$router.push({path: '/index' }); //跳转到首页
+                                //         break;
+                                //     case "1": //教师
+                                //         this.$cookies.set("cname", resData.teacherName);
+                                //         this.$cookies.set("cid", resData.teacherId);
+                                //         this.$cookies.set("role", 1);
+                                //         this.$router.push({path: '/index' }); //跳转到教师用户
+                                //         break;
+                                //
+                                // }
                             }
                             if(resData == null) { //错误提示
                                 this.$message({
@@ -154,7 +165,7 @@
     }
     #login .top .title {
         margin-top: 160px;
-        font-size: 80px;
+        font-size: 60px;
     }
     #login .bottom {
         display:flex;

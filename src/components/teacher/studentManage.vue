@@ -2,17 +2,26 @@
 <template>
     <div class="all">
         <el-table :data="pagination.records" border>
-            <el-table-column fixed="left" prop="studentName" label="姓名" width="180"></el-table-column>
-            <el-table-column prop="institute" label="学院" width="200"></el-table-column>
-            <el-table-column prop="major" label="专业" width="200"></el-table-column>
-            <el-table-column prop="grade" label="年级" width="200"></el-table-column>
-            <el-table-column prop="clazz" label="班级" width="100"></el-table-column>
-            <el-table-column prop="sex" label="性别" width="120"></el-table-column>
-            <el-table-column prop="tel" label="联系方式" width="120"></el-table-column>
-            <el-table-column fixed="right" label="操作" width="150">
+            <el-table-column fixed="left" prop="username" label="用户名" width="180"></el-table-column>
+            <el-table-column prop="email" label="邮箱" width="200"></el-table-column>
+            <el-table-column  label="状态" width="200" >
                 <template slot-scope="scope">
-                    <el-button @click="checkGrade(scope.row.studentId)" type="primary" size="small">编辑</el-button>
-                    <el-button @click="deleteById(scope.row.studentId)" type="danger" size="small">删除</el-button>
+                    <el-button v-if="scope.row.status == 1" type="success" round>正常状态</el-button>
+                    <el-button v-if="scope.row.status == 0" type="danger" round>封禁状态</el-button>
+                </template>
+            </el-table-column>
+            <el-table-column prop="createTime" label="注册时间" width="200"></el-table-column>
+            <el-table-column  label="封禁/解封" width="150">
+                <template slot-scope="scope">
+                    <el-button @click="banById(scope.row.id)" v-if="scope.row.status == 1" type="danger" plain>封禁</el-button>
+                    <el-button @click="pickById(scope.row.id)" v-if="scope.row.status == 0" type="success" plain>解封</el-button>
+                </template>
+            </el-table-column>
+            <el-table-column  label="操作" width="150">
+                <template slot-scope="scope">
+<!--                    <el-button @click="checkGrade(scope.row.studentId)" type="primary" size="small">编辑</el-button>-->
+
+                    <el-button @click="deleteById(scope.row.id)" type="danger" size="small">删除</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -34,10 +43,10 @@
                 :before-close="handleClose">
             <section class="update">
                 <el-form ref="form" :model="form" label-width="80px">
-                    <el-form-item label="姓名">
+                    <el-form-item label="用户名">
                         <el-input v-model="form.studentName"></el-input>
                     </el-form-item>
-                    <el-form-item label="学院">
+                    <el-form-item label="邮箱">
                         <el-input v-model="form.institute"></el-input>
                     </el-form-item>
                     <el-form-item label="专业">
@@ -73,7 +82,7 @@
                     //分页后的考试信息
                     current: 1, //当前页
                     total: null, //记录条数
-                    size: 1, //每页条数
+                    size: 10, //每页条数
                 },
                 dialogVisible: false, //对话框
                 form: {}, //保存点击以后当前试卷的信息
@@ -85,7 +94,7 @@
         methods: {
             getStudentInfo() {
                 //分页查询所有试卷信息
-                this.$axios(`/students/${this.pagination.current}/${this.pagination.size}`).then(res => {
+                this.$axios(`/users/${this.pagination.current}/${this.pagination.size}`).then(res => {
                     this.pagination = res.data.data;
                 }).catch(error => {});
             },
@@ -106,16 +115,48 @@
                 });
                 //this.form=student;
             },
-            deleteById(studentId) { //删除当前学生
-                this.$confirm("确定删除当前学生吗？删除后无法恢复","Warning",{
+            banById(id){
+                this.$axios({
+                    url: `/banUser/${id}`,
+                }).then(res => {
+                    if(res.data.code ==200) {
+                        this.$message({
+                            message: res.data.message,
+                            type: 'success'
+                        })
+                    }
+                    this.getStudentInfo();
+                })
+            },
+            pickById(id){
+                this.$axios({
+                    url: `/pickUser/${id}`,
+                }).then(res => {
+                    if(res.data.code ==200) {
+                        this.$message({
+                            message: res.data.message,
+                            type: 'success'
+                        })
+                    }
+                    this.getStudentInfo();
+                })
+            },
+            deleteById(id) { //删除当前学生
+                this.$confirm("确定删除当前用户吗？删除后无法恢复","Warning",{
                     confirmButtonText: '确定删除',
                     cancelButtonText: '算了,留着吧',
                     type: 'danger'
                 }).then(()=> { //确认删除
                     this.$axios({
-                        url: `/student/${studentId}`,
+                        url: `/deleteUser/${id}`,
                         method: 'delete',
                     }).then(res => {
+                        if(res.data.code ==200) {
+                            this.$message({
+                                message: res.data.message,
+                                type: 'success'
+                            })
+                        }
                         this.getStudentInfo();
                     })
                 }).catch(() => {

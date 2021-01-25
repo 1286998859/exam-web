@@ -2,7 +2,7 @@
     <div>
         <el-container>
             <el-header class="homeHeader">
-                <div class="title">艾学习考试系统</div>
+                <div class="title">黎明社区生活互动平台</div>
                 <div>
 
                     <el-dropdown class="userInfo" @command="commandHandler">
@@ -18,12 +18,10 @@
             <el-container>
                 <el-aside width="200px">
                     <el-menu router :default-active="activeIndex" class="el-menu-demo" mode="vertical" @select="handleSelect">
-                        <el-menu-item index="/student/myCommunity"><i class="el-icon-data-analysis"></i>我的社区</el-menu-item>
+                        <el-menu-item index="/student/myCommunity"><i class="el-icon-s-home"></i>我的社区</el-menu-item>
                         <el-menu-item  index="/student/myExam" @click="myExam()"><i class="el-icon-document"></i>我的试卷</el-menu-item>
                         <el-menu-item index="/student/myPratice"><i class="el-icon-edit"></i>我的练习</el-menu-item>
                         <el-menu-item index="/student/myScore"><i class="el-icon-data-analysis"></i>我的分数</el-menu-item>
-
-
                     </el-menu>
                 </el-aside>
                 <el-main>
