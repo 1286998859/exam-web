@@ -1,5 +1,16 @@
 <template>
     <div>
+        <div style="margin-left: 900px" >
+            <el-input placeholder="请输入帖子标题进行搜索，可以直接回车搜索..." prefix-icon="el-icon-search"
+                      clearable
+                      @clear="searchByKeyword"
+                      style="width: 350px;margin-right: 10px" v-model="keyword"
+                      @keydown.enter.native="searchByKeyword" ></el-input>
+            <el-button icon="el-icon-search" type="primary" @click="searchByKeyword" >
+                搜索
+            </el-button>
+        </div>
+
         <el-table :data="pagination.records" border>
             <el-table-column fixed="left" prop="user.username" label="用户名" width="150"></el-table-column>
             <el-table-column prop="title" label="标题" width="200">
@@ -68,12 +79,18 @@
                     total: null, //记录条数
                     size: 10, //每页条数
                 },
+                keyword:"",
             };
         },
         created() {
             this.getDiscussInfo();
         },
         methods:{
+            searchByKeyword(){
+                this.$axios(`/discussPostsByKeyword/${this.pagination.current}/${this.pagination.size}/${this.keyword}`).then(res => {
+                    this.pagination = res.data.data;
+                }).catch(error => {});
+            },
             makeTop(id){
                 this.$axios({
                     url: `/makeTop/${id}`,

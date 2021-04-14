@@ -51,36 +51,7 @@
                 </li>
             </ul>
 
-            <el-dialog
-                    title="发布帖子"
-                    :visible.sync="dialogVisible"
-                    width="100%"
-                    :before-close="handleClose">
 
-                <div class="modal-dialog modal-lg" role="document">
-                    <div class="modal-content">
-
-                        <div class="modal-body wid" width="100%" >
-                            <form width="100%">
-                                <div class="form-group" width="100%">
-                                    <label for="recipient-name" class="col-form-label">标题：</label>
-                                    <input type="text" class="form-control" >
-                                </div>
-
-                                <div class="form-group" width="100%">
-                                    <label for="message-text" class="col-form-label">正文：</label>
-                                    <mavon-editor  class="editor" />
-                                </div>
-                            </form>
-                        </div>
-
-                    </div>
-                </div>
-                <span slot="footer" class="dialog-footer">
-                <el-button @click="dialogVisible = false">取 消</el-button>
-                <el-button type="primary" @click="dialogVisible = false">发 布</el-button>
-                </span>
-            </el-dialog>
 
             <el-pagination
                     @size-change="handleSizeChange"

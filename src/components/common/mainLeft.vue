@@ -19,8 +19,8 @@
                 </template>
                 <el-menu-item-group v-for="(list,index1) in item.content" :key="index1">
                     <el-menu-item  @click="handleTitle(item.index,list.item1)" :index="list.path" v-if="list.item1 != null">{{list.item1}}</el-menu-item>
-                    <el-menu-item @click="handleTitle1(item.index),handleTitle2(list.item2)" :index="list.path" v-if="list.item2 != null">{{list.item2}}</el-menu-item>
-                    <el-menu-item @click="handleTitle1(item.index),handleTitle2(list.item3)" :index="list.path" v-if="list.item3 != null">{{list.item3}}</el-menu-item>
+                    <el-menu-item @click="handleTitle1(item.index,list.item2)" :index="list.path" v-if="list.item2 != null">{{list.item2}}</el-menu-item>
+                    <el-menu-item @click="handleTitle(item.index,list.item3)" :index="list.path" v-if="list.item3 != null">{{list.item3}}</el-menu-item>
                 </el-menu-item-group>
             </el-submenu>
         </el-menu>

@@ -1,6 +1,17 @@
-// 学生管理页面
+// 用户管理页面
 <template>
     <div class="all">
+        <div style="margin-left: 620px" >
+            <el-input placeholder="请输入用户名进行搜索，可以直接回车搜索..." prefix-icon="el-icon-search"
+                      clearable
+                      @clear="searchByKeyword"
+                      style="width: 350px;margin-right: 10px" v-model="keyword"
+                      @keydown.enter.native="searchByKeyword" ></el-input>
+            <el-button icon="el-icon-search" type="primary" @click="searchByKeyword" >
+                搜索
+            </el-button>
+        </div>
+
         <el-table :data="pagination.records" border>
             <el-table-column fixed="left" prop="username" label="用户名" width="180"></el-table-column>
             <el-table-column prop="email" label="邮箱" width="200"></el-table-column>
@@ -35,42 +46,7 @@
                 :total="pagination.total"
                 class="page">
         </el-pagination>
-        <!-- 编辑对话框-->
-        <el-dialog
-                title="编辑试卷信息"
-                :visible.sync="dialogVisible"
-                width="30%"
-                :before-close="handleClose">
-            <section class="update">
-                <el-form ref="form" :model="form" label-width="80px">
-                    <el-form-item label="用户名">
-                        <el-input v-model="form.studentName"></el-input>
-                    </el-form-item>
-                    <el-form-item label="邮箱">
-                        <el-input v-model="form.institute"></el-input>
-                    </el-form-item>
-                    <el-form-item label="专业">
-                        <el-input v-model="form.major"></el-input>
-                    </el-form-item>
-                    <el-form-item label="年级">
-                        <el-input v-model="form.grade"></el-input>
-                    </el-form-item>
-                    <el-form-item label="班级">
-                        <el-input v-model="form.clazz"></el-input>
-                    </el-form-item>
-                    <el-form-item label="性别">
-                        <el-input v-model="form.sex"></el-input>
-                    </el-form-item>
-                    <el-form-item label="电话号码">
-                        <el-input v-model="form.tel"></el-input>
-                    </el-form-item>
-                </el-form>
-            </section>
-            <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="submit()">确 定</el-button>
-      </span>
-        </el-dialog>
+
     </div>
 </template>
 
@@ -84,6 +60,7 @@
                     total: null, //记录条数
                     size: 10, //每页条数
                 },
+                keyword:"",
                 dialogVisible: false, //对话框
                 form: {}, //保存点击以后当前试卷的信息
             };
@@ -92,6 +69,11 @@
             this.getStudentInfo();
         },
         methods: {
+            searchByKeyword(){
+                this.$axios(`/usersByKeyword/${this.pagination.current}/${this.pagination.size}/${this.keyword}`).then(res => {
+                    this.pagination = res.data.data;
+                }).catch(error => {});
+            },
             getStudentInfo() {
                 //分页查询所有试卷信息
                 this.$axios(`/users/${this.pagination.current}/${this.pagination.size}`).then(res => {

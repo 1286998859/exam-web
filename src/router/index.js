@@ -19,6 +19,8 @@ const routes = [
         {path: '/student/mySetting', component: () => import('../components/student/mySetting')},
         {path: '/student/myCommunity', component: () => import('../components/community/index')},
         {path: '/community/publish', component: () => import('../components/community/publish')},
+        {path: '/examMsg', component: () => import('../components/student/examMsg')},
+        {path: '/userScore', component: () => import("../components/student/answerScore")},
         {
             path: "/post/:id",
             name: "discuss",
@@ -27,8 +29,10 @@ const routes = [
                 title: "帖子详情",
             },
         },
+
     ]
   },
+    {path: '/answer',component: () => import('../components/student/answer')},
     {
         path: '/index', //教师主页
         component: () => import('../components/admin/index'),
@@ -49,25 +53,35 @@ const routes = [
                 path: '/scorePart',
                 component: () => import('../components/charts/scorePart')
             },
-            {
-                path: '/allStudentsGrade', //所有学生成绩统计
-                component: () => import('../components/teacher/allStudentsGrade')
-            },
+
             {
                 path: '/examDescription', //考试管理功能描述
                 component: () => import('../components/teacher/examDescription')
             },
+
+
             {
-                path: '/selectExam', //查询所有考试
-                component: () => import('../components/teacher/selectExam')
+                path: '/answerDescription', //题库管理功能介绍
+                component: ()=> import('../components/teacher/answerDescription')
+            },
+
+
+            */
+            {
+                path: '/studentManage', //学生管理界面
+                component: () => import('../components/teacher/studentManage')
+            },
+            {
+                path: '/discussManage',
+                component: () => import('../components/teacher/discussManage')
             },
             {
                 path: '/addExam', //添加考试
                 component: () => import('../components/teacher/addExam')
             },
             {
-                path: '/answerDescription', //题库管理功能介绍
-                component: ()=> import('../components/teacher/answerDescription')
+                path: '/selectExam', //查询所有考试
+                component: () => import('../components/teacher/selectExam')
             },
             {
                 path: '/selectAnswer', //查询所有题库
@@ -80,14 +94,10 @@ const routes = [
             {
                 path: '/addAnswerChildren', //点击试卷跳转到添加题库页面
                 component: () => import('../components/teacher/addAnswerChildren')
-            },*/
-            {
-                path: '/studentManage', //学生管理界面
-                component: () => import('../components/teacher/studentManage')
             },
             {
-                path: '/discussManage',
-                component: () => import('../components/teacher/discussManage')
+                path: '/allUsersGrade', //所有学生成绩统计
+                component: () => import('../components/teacher/allUsersGrade')
             },
 
 
